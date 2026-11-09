@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wingo Elite Poster Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#080b14;--panel:#111827;--line:#263248;--muted:#9aa8bd;--accent:#b78cff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#202044 0,transparent 38%),radial-gradient(ellipse at 100% 20%,#102e40 0,transparent 34%),#080b14;color:#f7f8ff;font:15px Inter,system-ui,Arial,sans-serif}.wrap{max-width:1160px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.brand{font-weight:900;letter-spacing:.13em;font-size:13px;color:#d8c5ff}.brand b{font-size:24px;display:block;letter-spacing:.02em;color:white;margin-top:4px}.pill{border:1px solid #4c3e6b;border-radius:99px;padding:8px 12px;color:#d9c9ff;font-size:12px;background:#1a1530}.layout{display:grid;grid-template-columns:370px 1fr;gap:20px}.panel,.previewPanel{background:linear-gradient(150deg,#151d2d,#0e1421);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 18px 60px #0005}.tabs{display:grid;grid-template-columns:1fr 1fr;background:#090e19;padding:5px;border-radius:13px;margin-bottom:20px}.tabs button,.btn{border:0;border-radius:10px;padding:12px 14px;font-weight:800;cursor:pointer}.tabs button{background:transparent;color:#9caac0}.tabs button.active{background:linear-gradient(110deg,#8757ef,#27b8d3);color:white}.field{margin:15px 0}.field label{display:block;font-size:12px;color:#aebbd0;margin-bottom:7px}.field input,.field select{width:100%;padding:12px 13px;border-radius:11px;border:1px solid #344158;background:#0a1120;color:white;font-size:15px;outline:none}.field input:focus,.field select:focus{border-color:#a17aff}.choice{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice button{background:#0b1220;border:1px solid #354158;color:#c7d2e4}.choice button.selected{border-color:#c49aff;background:#30204d;color:#fff;box-shadow:0 0 20px #a56bff35}.themes{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.theme{border:2px solid transparent;border-radius:12px;padding:0;overflow:hidden;background:#111;cursor:pointer}.theme.selected{border-color:#fff;box-shadow:0 0 0 2px #9b75ff}.swatch{height:42px;display:block}.theme small{display:block;padding:6px 3px;font-size:10px;color:#dbe3f2}.actions{display:flex;gap:9px;margin-top:18px}.btn{flex:1;color:white;background:#26334b}.btn.primary{background:linear-gradient(110deg,#8957ee,#20aeca);box-shadow:0 8px 22px #6e4cdb44}.btn.ghost{background:#1b2639;border:1px solid #344158}.previewHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.previewHead h2{margin:0;font-size:16px}.previewHead span{font-size:11px;color:#9baac1}.canvasWrap{background:#080d18;border:1px solid #2b3850;border-radius:17px;padding:12px;display:flex;justify-content:center;align-items:center;min-height:540px}canvas{width:min(100%,460px);height:auto;aspect-ratio:4/5;border-radius:10px;box-shadow:0 15px 45px #0008}.hint{font-size:11px;line-height:1.5;color:#8998af;margin-top:13px}.hidden{display:none!important}.footer{text-align:center;color:#718099;font-size:11px;padding:22px 0 4px}
+@media(max-width:850px){.wrap{padding:14px}.layout{grid-template-columns:1fr}.canvasWrap{min-height:0;padding:8px}.top{align-items:flex-start;flex-direction:column}.panel,.previewPanel{padding:15px}}
+</style></head><body><div class="wrap">
+<header class="top"><div class="brand">◈ WINGO ELITE <b>POSTER STUDIO</b></div><div class="pill">3D PREMIUM GLOWING EDITION</div></header>
+<div class="layout"><section class="panel">
+<div class="tabs"><button id="tradeTab" class="active">TRADE POSTER</button><button id="resultTab">RESULT POSTER</button></div>
+<div id="tradeFields">
+<div class="field"><label>PERIOD NUMBER</label><input id="period" inputmode="numeric" maxlength="24" placeholder="Enter period number"></div>
+<div class="field"><label>TRADE SELECTION</label><div class="choice"><button id="bigBtn" class="selected">BIG</button><button id="smallBtn">SMALL</button></div></div>
+<div class="field"><label>AMOUNT (₹)</label><input id="amount" type="number" min="0" placeholder="Enter amount"></div>
+</div>
+<div id="resultFields" class="hidden">
+<div class="field"><label>RESULT</label><div class="choice"><button id="winBtn" class="selected">WIN</button><button id="lossBtn">LOSS</button></div></div>
+<p class="hint">Result poster contains only the selected word: WIN or LOSS. No period, amount, profit, balance or extra result details are printed.</p>
+</div>
+<div class="field"><label>CHOOSE BACKGROUND THEME</label><div class="themes" id="themes"></div></div>
+<div class="actions"><button class="btn primary" id="download">Download PNG</button><button class="btn ghost" id="share">Share</button></div>
+<p class="hint">Preview updates instantly. Export is a high-resolution 1080 × 1350 PNG. Trade and result posters remain separate.</p>
+</section>
+<section class="previewPanel"><div class="previewHead"><h2>LIVE POSTER PREVIEW</h2><span>1080 × 1350 · 4:5</span></div><div class="canvasWrap"><canvas id="poster" width="1080" height="1350"></canvas></div></section></div>
+<div class="footer">WINGO ELITE POSTER STUDIO · DESIGNED FOR MOBILE & DESKTOP</div></div>
+<script>
+const themes=[
+{name:'Obsidian Gold',a:'#08090f',b:'#4a2a08',c:'#f9d77b',d:'#fff2c2'},
+{name:'Royal Purple',a:'#100824',b:'#5423a4',c:'#d6a4ff',d:'#fff0ff'},
+{name:'Emerald',a:'#031b17',b:'#087b58',c:'#65ffc1',d:'#e2fff1'},
+{name:'Crimson',a:'#1c050b',b:'#9d102f',c:'#ff7895',d:'#fff0f3'},
+{name:'Cyber Blue',a:'#041322',b:'#075e91',c:'#62dcff',d:'#e6faff'},
+{name:'White Silver',a:'#dfe7f1',b:'#718096',c:'#ffffff',d:'#172033'},
+{name:'Rose Luxe',a:'#260c20',b:'#9c3f75',c:'#ffb7df',d:'#fff0f8'},
+{name:'Midnight Teal',a:'#041719',b:'#087e83',c:'#73fff0',d:'#e5fffc'},
+{name:'Neon Orange',a:'#1c0c03',b:'#a94b08',c:'#ffc078',d:'#fff4e7'},
+{name:'Sapphire',a:'#070d2b',b:'#263fa5',c:'#91aaff',d:'#f0f3ff'},
+{name:'Graphite',a:'#101318',b:'#4b5563',c:'#e2e8f0',d:'#ffffff'},
+{name:'Aurora',a:'#071b28',b:'#4c247d',c:'#82f7e7',d:'#f4eaff'}];
+let mode='trade',side='BIG',result='WIN',themeIndex=0;
+const $=id=>document.getElementById(id),canvas=$('poster'),ctx=canvas.getContext('2d');
+function makeThemes(){ $('themes').innerHTML=themes.map((t,i)=>`<button class="theme ${i===themeIndex?'selected':''}" data-i="${i}"><span class="swatch" style="background:linear-gradient(130deg,${t.a},${t.b},${t.c})"></span><small>${t.name}</small></button>`).join('');document.querySelectorAll('.theme').forEach(b=>b.onclick=()=>{themeIndex=+b.dataset.i;makeThemes();draw()}) }
+function roundedRect(x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
+function glowText(text,y,size,color,glow){ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`900 ${size}px Arial Black, Impact, sans-serif`;ctx.shadowColor=glow;ctx.shadowBlur=55;ctx.lineWidth=7;ctx.strokeStyle='#ffffff55';ctx.strokeText(text,540,y);ctx.shadowBlur=22;ctx.fillStyle=color;ctx.fillText(text,540,y);ctx.shadowBlur=0;ctx.lineWidth=2;ctx.strokeStyle='#ffffffaa';ctx.strokeText(text,540,y);ctx.restore()}
+function draw(){let t=themes[themeIndex],g=ctx.createLinearGradient(0,0,1080,1350);g.addColorStop(0,t.a);g.addColorStop(.55,t.b);g.addColorStop(1,t.a);ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);
+// ambient light and decorative rings
+let rg=ctx.createRadialGradient(540,560,30,540,650,700);rg.addColorStop(0,t.c+'66');rg.addColorStop(1,'transparent');ctx.fillStyle=rg;ctx.fillRect(0,0,1080,1350);
+ctx.save();ctx.strokeStyle=t.c+'55';ctx.lineWidth=3;for(let i=0;i<5;i++){ctx.beginPath();ctx.arc(540,675,330+i*72,0,Math.PI*2);ctx.stroke()}ctx.restore();
+ctx.save();ctx.strokeStyle=t.c+'88';ctx.lineWidth=4;roundedRect(42,42,996,1266,38);ctx.stroke();ctx.strokeStyle=t.d+'66';ctx.lineWidth=2;roundedRect(62,62,956,1226,28);ctx.stroke();ctx.restore();
+ctx.textAlign='center';ctx.fillStyle=t.d;ctx.font='800 34px Arial';ctx.letterSpacing='9px';ctx.fillText('W I N G O   E L I T E',540,150);ctx.font='500 19px Arial';ctx.fillStyle=t.c+'cc';ctx.fillText('PREMIUM POSTER STUDIO',540,198);
+if(mode==='result'){
+ const win=result==='WIN';const main=win?'#a7ffcb':'#ff9aab',halo=win?'#00ff88':'#ff174f';
+ // luminous emblem frame
+ ctx.save();ctx.shadowColor=halo;ctx.shadowBlur=55;ctx.strokeStyle=halo;ctx.lineWidth=5;roundedRect(145,365,790,620,48);ctx.stroke();ctx.restore();
+ ctx.save();ctx.textAlign='center';ctx.fillStyle=main;ctx.shadowColor=halo;ctx.shadowBlur=85;ctx.font='900 220px Arial Black, Impact, sans-serif';ctx.fillText(result,540,710);ctx.shadowBlur=25;ctx.lineWidth=5;ctx.strokeStyle='#ffffff';ctx.strokeText(result,540,710);ctx.restore();
+ // small abstract flares, no labels or secondary text
+ for(let i=0;i<18;i++){let x=110+(i*173)%860,y=270+(i*239)%820;ctx.fillStyle=t.c+'99';ctx.beginPath();ctx.arc(x,y,3+(i%4)*2,0,Math.PI*2);ctx.fill()}
+}else{
+ glowText(side,610,230,t.d,t.c);ctx.save();ctx.textAlign='center';ctx.fillStyle=t.d;ctx.font='700 44px Arial';ctx.fillText('PERIOD  '+(($('period').value||'—').trim()),540,830);ctx.font='700 52px Arial';ctx.fillStyle=t.c;ctx.fillText('₹ '+(($('amount').value||'—').trim()),540,930);ctx.restore();
+}
+ctx.save();ctx.textAlign='center';ctx.fillStyle=t.d+'99';ctx.font='600 18px Arial';ctx.fillText('WINGO ELITE',540,1225);ctx.restore();
+}
+function setMode(m){mode=m;$('tradeTab').classList.toggle('active',m==='trade');$('resultTab').classList.toggle('active',m==='result');$('tradeFields').classList.toggle('hidden',m!=='trade');$('resultFields').classList.toggle('hidden',m!=='result');draw()}
+$('tradeTab').onclick=()=>setMode('trade');$('resultTab').onclick=()=>setMode('result');
+$('bigBtn').onclick=()=>{side='BIG';$('bigBtn').classList.add('selected');$('smallBtn').classList.remove('selected');draw()};$('smallBtn').onclick=()=>{side='SMALL';$('smallBtn').classList.add('selected');$('bigBtn').classList.remove('selected');draw()};
+$('winBtn').onclick=()=>{result='WIN';$('winBtn').classList.add('selected');$('lossBtn').classList.remove('selected');draw()};$('lossBtn').onclick=()=>{result='LOSS';$('lossBtn').classList.add('selected');$('winBtn').classList.remove('selected');draw()};
+['period','amount'].forEach(id=>$(id).addEventListener('input',draw));
+function download(){draw();let a=document.createElement('a');a.download=`Wingo-Elite-${mode==='result'?result:side}.png`;a.href=canvas.toDataURL('image/png');a.click()}
+$('download').onclick=download;$('share').onclick=async()=>{draw();canvas.toBlob(async blob=>{let file=new File([blob],`Wingo-Elite-${mode==='result'?result:side}.png`,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:'Wingo Elite Poster'})}catch(e){}}else download()},'image/png')};
+makeThemes();draw();
+</script></body></html>
